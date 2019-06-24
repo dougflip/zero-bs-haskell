@@ -20,6 +20,13 @@ packages:
   original:
     subdir: library
     url: https://github.com/alpacaaa/zero-bullshit-haskell/archive/master.tar.gz
+- completed:
+    hackage: hindent-5.3.0@sha256:ba915086b426771debeaf593df4bbd8ab187aff3bfe147cecf82274eec406a2c,3452
+    pantry-tree:
+      size: 1027
+      sha256: 0fcf52c151e79ba5beeaa04afcc93e372eb13860ac82669e0fe744ba79b4f70c
+  original:
+    hackage: hindent-5.3.0@sha256:ba915086b426771debeaf593df4bbd8ab187aff3bfe147cecf82274eec406a2c,3452
 snapshots:
 - completed:
     size: 499461

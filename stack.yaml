@@ -50,6 +50,7 @@ extra-deps:
     commit: master
     subdirs:
       - library
+  - hindent-5.3.0@sha256:ba915086b426771debeaf593df4bbd8ab187aff3bfe147cecf82274eec406a2c,3452
 # Control whether we use the GHC we find on the path
 # system-ghc: true
 #
