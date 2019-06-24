@@ -3,6 +3,8 @@ module Lib where
 import qualified Data.List as List
 import qualified Zero.Server as Server
    
+data OnOffState = On | Off deriving (Show, Eq)
+
 helloHandler :: Server.Request -> Server.Response
 helloHandler _ = Server.stringResponse "hello"
 
@@ -15,11 +17,12 @@ caseHandler = Server.stringResponse . mapNumberToString . Server.requestBody
 stringManipulationHandler :: Server.Request -> Server.Response
 stringManipulationHandler = Server.stringResponse . manipulateString . Server.requestBody
 
-onOffHandler :: Bool -> Server.Request -> (Bool, Server.Response)
-onOffHandler isOn req = (newState, Server.stringResponse response)
+onOffHandler :: OnOffState -> Server.Request -> (OnOffState, Server.Response)
+onOffHandler state _ = (newState, Server.stringResponse (show newState))
     where
-        newState = if isOn then False else True
-        response = if newState then "On" else "Off"
+        newState = case state of
+            On -> Off
+            Off -> On
 
 mapNumberToString :: String -> String
 mapNumberToString "1" = "one"
@@ -38,5 +41,5 @@ run = Server.startServer [
     Server.simpleHandler Server.POST "/echo" echoHandler,
     Server.simpleHandler Server.POST "/case" caseHandler,
     Server.simpleHandler Server.POST "/string-manipulation" stringManipulationHandler,
-    Server.handlersWithState False [Server.statefulHandler Server.POST "/onoff-switch" onOffHandler]
+    Server.handlersWithState Off [Server.statefulHandler Server.POST "/onoff-switch" onOffHandler]
     ]
