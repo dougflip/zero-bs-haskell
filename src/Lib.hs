@@ -1,6 +1,7 @@
 module Lib where
 
 import qualified Data.List   as List
+import qualified Ex06
 import qualified Zero.Server as Server
 
 data OnOffState
@@ -29,12 +30,6 @@ onOffHandler state _ = (newState, Server.stringResponse (show newState))
         On  -> Off
         Off -> On
 
-currentCountHandler :: Int -> Server.Request -> (Int, Server.Response)
-currentCountHandler state _ = (state, Server.stringResponse (show state))
-
-increaseHandler :: Int -> Server.Request -> (Int, Server.Response)
-increaseHandler state _ = (state + 1, Server.stringResponse "")
-
 mapNumberToString :: String -> String
 mapNumberToString "1" = "one"
 mapNumberToString "2" = "two"
@@ -60,8 +55,11 @@ run =
         Off
         [Server.statefulHandler Server.POST "/onoff-switch" onOffHandler]
     , Server.handlersWithState
-        0
-        [ Server.statefulHandler Server.GET "/current-count" currentCountHandler
-        , Server.statefulHandler Server.POST "/increase" increaseHandler
+        Ex06.getInitialState
+        [ Server.statefulHandler
+            Server.GET
+            "/current-count"
+            Ex06.currentCountHandler
+        , Server.statefulHandler Server.POST "/increase" Ex06.increaseHandler
         ]
     ]
