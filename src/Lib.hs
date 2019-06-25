@@ -2,6 +2,7 @@ module Lib where
 
 import qualified Data.List   as List
 import qualified Ex06
+import qualified Ex07
 import qualified Zero.Server as Server
 
 data OnOffState
@@ -61,5 +62,10 @@ run =
             "/current-count"
             Ex06.currentCountHandler
         , Server.statefulHandler Server.POST "/increase" Ex06.increaseHandler
+        ]
+    , Server.handlersWithState
+        Ex07.getInitialState
+        [ Server.statefulHandler Server.GET "/cart" Ex07.cartHandler
+        , Server.statefulHandler Server.POST "/cart" Ex07.updateCartHandler
         ]
     ]

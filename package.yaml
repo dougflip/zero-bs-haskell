@@ -25,6 +25,7 @@ default-extensions:
   - DeriveAnyClass
 
 dependencies:
+  - aeson
   - base
   - zero-bullshit
 
