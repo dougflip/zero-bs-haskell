@@ -29,6 +29,12 @@ onOffHandler state _ = (newState, Server.stringResponse (show newState))
         On  -> Off
         Off -> On
 
+currentCountHandler :: Int -> Server.Request -> (Int, Server.Response)
+currentCountHandler state _ = (state, Server.stringResponse (show state))
+
+increaseHandler :: Int -> Server.Request -> (Int, Server.Response)
+increaseHandler state _ = (state + 1, Server.stringResponse "")
+
 mapNumberToString :: String -> String
 mapNumberToString "1" = "one"
 mapNumberToString "2" = "two"
@@ -53,4 +59,9 @@ run =
     , Server.handlersWithState
         Off
         [Server.statefulHandler Server.POST "/onoff-switch" onOffHandler]
+    , Server.handlersWithState
+        0
+        [ Server.statefulHandler Server.GET "/current-count" currentCountHandler
+        , Server.statefulHandler Server.POST "/increase" increaseHandler
+        ]
     ]
