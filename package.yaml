@@ -27,6 +27,7 @@ default-extensions:
 dependencies:
   - aeson
   - base
+  - containers
   - zero-bullshit
 
 library:

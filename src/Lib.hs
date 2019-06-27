@@ -2,7 +2,7 @@ module Lib where
 
 import qualified Data.List   as List
 import qualified Ex06
-import qualified Ex07
+import qualified Ex08
 import qualified Zero.Server as Server
 
 data OnOffState
@@ -64,8 +64,8 @@ run =
         , Server.statefulHandler Server.POST "/increase" Ex06.increaseHandler
         ]
     , Server.handlersWithState
-        Ex07.getInitialState
-        [ Server.statefulHandler Server.GET "/cart" Ex07.cartHandler
-        , Server.statefulHandler Server.POST "/cart" Ex07.updateCartHandler
+        Ex08.getInitialState
+        [ Server.statefulHandler Server.GET "/cart" Ex08.getCartHandler
+        , Server.statefulHandler Server.POST "/cart" Ex08.updateCartHandler
         ]
     ]
