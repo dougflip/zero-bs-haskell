@@ -1,7 +1,10 @@
 module Ex08
   ( getInitialState
   , getCartHandler
+  , toSortedList
   , updateCartHandler
+  , updateCart
+  , CartItem(CartItem)
   ) where
 
 import qualified Data.Aeson      as Aeson
@@ -36,11 +39,11 @@ data CartItem =
     { model    :: String
     , quantity :: Int
     }
-  deriving (Eq, Generic, Aeson.FromJSON, Aeson.ToJSON)
+  deriving (Eq, Show, Generic, Aeson.FromJSON, Aeson.ToJSON)
 
 newtype Cart =
   Cart (Map.Map String CartItem)
-  deriving (Eq, Generic, Aeson.FromJSON, Aeson.ToJSON)
+  deriving (Eq, Show, Generic, Aeson.FromJSON, Aeson.ToJSON)
 
 updateCart :: Cart -> CartItem -> Cart
 updateCart (Cart stuff) item =
