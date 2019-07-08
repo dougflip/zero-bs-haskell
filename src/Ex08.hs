@@ -1,7 +1,10 @@
 module Ex08
-  ( getInitialState
-  , getCartHandler
+  ( getCartHandler
   , updateCartHandler
+  , getInitialState
+  , updateCart
+  , toSortedList
+  , CartItem(CartItem)
   ) where
 
 import qualified Data.Aeson      as Aeson
@@ -13,9 +16,6 @@ import qualified Zero.Server     as Server
 {-|
   Handler logic
 -}
-getInitialState :: Cart
-getInitialState = Cart Map.empty
-
 getCartHandler :: Cart -> Server.Request -> (Cart, Server.Response)
 getCartHandler cart _ = (cart, Server.jsonResponse $ toSortedList cart)
 
@@ -36,11 +36,14 @@ data CartItem =
     { model    :: String
     , quantity :: Int
     }
-  deriving (Eq, Generic, Aeson.FromJSON, Aeson.ToJSON)
+  deriving (Eq, Show, Generic, Aeson.FromJSON, Aeson.ToJSON)
 
 newtype Cart =
   Cart (Map.Map String CartItem)
-  deriving (Eq, Generic, Aeson.FromJSON, Aeson.ToJSON)
+  deriving (Eq, Show, Generic, Aeson.FromJSON, Aeson.ToJSON)
+
+getInitialState :: Cart
+getInitialState = Cart Map.empty
 
 updateCart :: Cart -> CartItem -> Cart
 updateCart (Cart stuff) item =
