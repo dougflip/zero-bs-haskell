@@ -4,6 +4,7 @@ module Ex08
   , toSortedList
   , updateCartHandler
   , updateCart
+  , Cart
   , CartItem(CartItem)
   ) where
 
@@ -29,7 +30,7 @@ updateCartHandler cart req = response
     response =
       case Server.decodeJson body of
         Left err -> (cart, Server.failureResponse err)
-        Right newItem -> (updateCart cart newItem, Server.stringResponse "ok")
+        Right newItem -> (updateCart newItem cart, Server.stringResponse "ok")
 
 {-|
   Cart API
@@ -45,8 +46,8 @@ newtype Cart =
   Cart (Map.Map String CartItem)
   deriving (Eq, Show, Generic, Aeson.FromJSON, Aeson.ToJSON)
 
-updateCart :: Cart -> CartItem -> Cart
-updateCart (Cart stuff) item =
+updateCart :: CartItem -> Cart -> Cart
+updateCart item (Cart stuff) =
   Cart $ Map.alter (upsertItem item) (model item) stuff
 
 upsertItem :: CartItem -> Maybe CartItem -> Maybe CartItem
