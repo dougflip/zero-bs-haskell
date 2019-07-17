@@ -40,4 +40,10 @@ unitTests =
         "./test/golden-files/add-two-items.json" $ do
         let cart = addPhone $ addLaptop Ex08.getInitialState
         cartAsJson $ Ex08.toSortedList cart
+    , goldenVsString
+        "it increments the quantity of 2 different items"
+        "./test/golden-files/increment-two-items.json" $ do
+        let cart =
+              addLaptop $ addPhone $ addPhone $ addLaptop Ex08.getInitialState
+        cartAsJson $ Ex08.toSortedList cart
     ]
